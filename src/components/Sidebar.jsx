@@ -57,11 +57,56 @@ const Sidebar = ({ activeTab, setActiveTab, collapsed, setCollapsed }) => {
 
   return (
     <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
-      <div className="sidebar-header">
-        <div className="logo">
-          <span className="logo-icon">⚡</span>
-          {!collapsed && <span className="logo-text">Flow Panel</span>}
+      <div className="sidebar-logo">
+        <div className="logo-container">
+          <div className="logo-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sidebarGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#fbbf24" />
+                  <stop offset="50%" stopColor="#f59e0b" />
+                  <stop offset="100%" stopColor="#d97706" />
+                </linearGradient>
+                <linearGradient id="sidebarNeonAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#10b981" />
+                  <stop offset="100%" stopColor="#06d6a0" />
+                </linearGradient>
+              </defs>
+              
+              {/* Command Center Base */}
+              <rect x="2" y="18" width="20" height="3" rx="1.5" fill="url(#sidebarGradient)" opacity="0.9"/>
+              
+              {/* Control Panels */}
+              <rect x="3" y="14" width="4" height="3" rx="0.5" fill="url(#sidebarGradient)" opacity="1"/>
+              <rect x="10" y="14" width="4" height="3" rx="0.5" fill="url(#sidebarGradient)" opacity="1"/>
+              <rect x="17" y="14" width="4" height="3" rx="0.5" fill="url(#sidebarGradient)" opacity="1"/>
+              
+              {/* Data Flow Lines */}
+              <path d="M5 13V10L12 7L19 10V13" stroke="url(#sidebarNeonAccent)" strokeWidth="2" fill="none" opacity="0.8"/>
+              
+              {/* Central Hub */}
+              <circle cx="12" cy="7" r="2.5" fill="url(#sidebarGradient)"/>
+              <circle cx="12" cy="7" r="1.2" fill="#ffffff" opacity="1"/>
+              
+              {/* Data Points */}
+              <circle cx="5" cy="10" r="1.2" fill="url(#sidebarNeonAccent)" opacity="0.9"/>
+              <circle cx="19" cy="10" r="1.2" fill="url(#sidebarNeonAccent)" opacity="0.9"/>
+              
+              {/* Funnel Elements */}
+              <path d="M8 3L16 3L14 6L10 6Z" fill="url(#sidebarGradient)" opacity="0.8"/>
+              <path d="M10 6L14 6L13 8L11 8Z" fill="url(#sidebarGradient)" opacity="0.9"/>
+              
+              {/* Neon Glow Effect */}
+              <circle cx="12" cy="7" r="3" fill="none" stroke="url(#sidebarNeonAccent)" strokeWidth="0.5" opacity="0.4"/>
+            </svg>
+          </div>
+          {!collapsed && (
+            <h1 className="logo-title">Flow Panel</h1>
+          )}
         </div>
+      </div>
+
+      <div className="sidebar-header">
         <button 
           className="collapse-btn"
           onClick={() => setCollapsed(!collapsed)}
@@ -91,7 +136,6 @@ const Sidebar = ({ activeTab, setActiveTab, collapsed, setCollapsed }) => {
       {!collapsed && (
         <div className="sidebar-footer">
           <div className="admin-panel-info">
-            <div className="admin-icon">⚡</div>
             <div className="admin-text">
               <div className="admin-title">Panel Admina</div>
               <div className="admin-version">v2.0.1</div>

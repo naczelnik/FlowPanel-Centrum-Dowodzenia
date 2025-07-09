@@ -16,52 +16,88 @@
   width: 80px;
 }
 
-.sidebar-header {
-  padding: 24px 20px;
+.sidebar-logo {
+  height: 80px;
+  padding: 16px 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  position: relative;
-}
-
-.sidebar.collapsed .sidebar-header {
-  padding: 24px 12px;
   justify-content: center;
-  flex-direction: column;
-  gap: 8px;
 }
 
-.logo {
+.sidebar.collapsed .sidebar-logo {
+  padding: 16px 12px;
+}
+
+.logo-container {
   display: flex;
   align-items: center;
-  gap: 12px;
-  transition: all 0.3s ease;
+  gap: 16px;
 }
 
-.sidebar.collapsed .logo {
+.sidebar.collapsed .logo-container {
   gap: 0;
 }
 
 .logo-icon {
-  font-size: 24px;
-  color: #6366f1;
-  min-width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: rgba(251, 191, 36, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
 }
 
-.logo-text {
-  font-size: 20px;
-  font-weight: 700;
-  color: #ffffff;
-  white-space: nowrap;
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-
-.sidebar.collapsed .logo-text {
+.logo-icon::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(135deg, #fbbf24, #10b981);
+  border-radius: 12px;
   opacity: 0;
-  width: 0;
-  overflow: hidden;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.logo-icon:hover {
+  background: rgba(251, 191, 36, 0.15);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+}
+
+.logo-icon:hover::before {
+  opacity: 0.2;
+}
+
+.logo-title {
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #10b981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  text-shadow: 0 0 30px rgba(251, 191, 36, 0.3);
+  white-space: nowrap;
+}
+
+.sidebar-header {
+  height: 56px;
+  padding: 12px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.sidebar.collapsed .sidebar-header {
+  padding: 12px;
+  justify-content: center;
 }
 
 .collapse-btn {
@@ -76,13 +112,9 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  position: absolute;
-  right: 20px;
 }
 
 .sidebar.collapsed .collapse-btn {
-  position: static;
-  margin: 0;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
 }
@@ -199,18 +231,6 @@
   background: rgba(99, 102, 241, 0.1);
   border-radius: 8px;
   border: 1px solid rgba(99, 102, 241, 0.2);
-}
-
-.admin-icon {
-  width: 32px;
-  height: 32px;
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  min-width: 32px;
 }
 
 .admin-title {
