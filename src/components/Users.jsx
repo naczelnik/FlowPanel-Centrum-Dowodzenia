@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
 import { Search, Plus, Eye, Edit, Trash2, MoreHorizontal } from 'lucide-react';
+import AddUserModal from './AddUserModal';
 import './Users.css';
 
 const Users = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUsers, setSelectedUsers] = useState([]);
+  const [showAddUserModal, setShowAddUserModal] = useState(false);
 
-  const users = [
+  const availablePlans = [
+    { id: 1, name: 'xBesh AI Starter' },
+    { id: 2, name: 'xBesh AI PRO' },
+    { id: 3, name: 'xBesh AI Vanta Black' },
+    { id: 4, name: 'xBesh AI DFY Command Center' },
+    { id: 5, name: 'xBesh 360 Agency' },
+    { id: 6, name: 'xBesh Reseller 25 License' },
+    { id: 7, name: 'xBesh BUNDLE' }
+  ];
+
+  const [users, setUsers] = useState([
     {
       id: 1,
       name: 'David Cassar',
@@ -111,7 +123,7 @@ const Users = () => {
       created: 'Jul 3, 25',
       createdTime: '05:36 PM'
     }
-  ];
+  ]);
 
   const handleSelectUser = (userId) => {
     setSelectedUsers(prev => 
@@ -125,12 +137,29 @@ const Users = () => {
     setSelectedUsers(selectedUsers.length === users.length ? [] : users.map(u => u.id));
   };
 
+  const handleAddUser = (userData) => {
+    const newUser = {
+      id: Date.now(),
+      name: userData.fullName,
+      email: userData.email,
+      avatar: userData.fullName.charAt(0).toUpperCase(),
+      status: userData.status === 'active' ? 'Active' : userData.status === 'pending' ? 'Pending' : 'Suspended',
+      plan: userData.plan,
+      tokens: { used: 0, total: 5000000 },
+      lastActivity: 'Never',
+      lastActivityDate: '',
+      created: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: '2-digit' }),
+      createdTime: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+    };
+    
+    setUsers(prev => [newUser, ...prev]);
+  };
+
   const getTokensPercentage = (used, total) => {
     return Math.round((used / total) * 100);
   };
 
   const getPlanColor = (planName) => {
-    // Dokładnie te same kolory co w PlanDistribution.jsx
     const planColors = {
       'xBesh AI PRO': '#06b6d4',
       'xBesh BUNDLE': '#ef4444',
@@ -155,7 +184,10 @@ const Users = () => {
           <h1>Zarządzanie Użytkownikami</h1>
           <p>Zarządzaj wszystkimi użytkownikami w systemie. Łącznie: {users.length} użytkowników</p>
         </div>
-        <button className="add-user-btn">
+        <button 
+          className="add-user-btn"
+          onClick={() => setShowAddUserModal(true)}
+        >
           <Plus size={16} />
           Dodaj Użytkownika
         </button>
@@ -223,7 +255,7 @@ const Users = () => {
                       <div className="user-email">{user.email}</div>
                     </div>
                     <span className={`status-badge ${user.status.toLowerCase()}`}>
-                      {user.status === 'Active' ? 'Aktywny' : 'Oczekujący'}
+                      {user.status === 'Active' ? 'Aktywny' : user.status === 'Pending' ? 'Oczekujący' : 'Zawieszony'}
                     </span>
                   </div>
                 </td>
@@ -275,6 +307,13 @@ const Users = () => {
           </tbody>
         </table>
       </div>
+
+      <AddUserModal
+        isOpen={showAddUserModal}
+        onClose={() => setShowAddUserModal(false)}
+        onAddUser={handleAddUser}
+        availablePlans={availablePlans}
+      />
     </div>
   );
 };

@@ -1,59 +1,66 @@
 import React from 'react';
-import { BarChart3, Users, Upload, Folder, Shield, Settings, TrendingUp, ChevronLeft, ChevronRight } from 'lucide-react';
+import { BarChart3, Upload, Shield, Settings, TrendingUp, ChevronLeft, ChevronRight, UserCog } from 'lucide-react';
 import './Sidebar.css';
 
 const Sidebar = ({ activeTab, setActiveTab, collapsed, setCollapsed }) => {
+  // Symulacja roli użytkownika - w prawdziwej aplikacji to będzie z kontekstu/state
+  const userRole = 'SuperAdmin'; // 'User', 'Admin', 'SuperAdmin'
+  
   const menuItems = [
     { 
       id: 'dashboard', 
       label: 'Panel Główny', 
       icon: BarChart3, 
       active: activeTab === 'dashboard',
-      size: 18
-    },
-    { 
-      id: 'users', 
-      label: 'Użytkownicy', 
-      icon: Users, 
-      active: activeTab === 'users',
-      size: 18
+      size: 18,
+      roles: ['User', 'Admin', 'SuperAdmin']
     },
     { 
       id: 'advertising', 
       label: 'Analityka Reklam', 
       icon: TrendingUp, 
       active: activeTab === 'advertising',
-      size: 18
+      size: 18,
+      roles: ['Admin', 'SuperAdmin']
     },
     { 
       id: 'bulk-import', 
       label: 'Import Masowy', 
       icon: Upload, 
       active: activeTab === 'bulk-import',
-      size: 18
-    },
-    { 
-      id: 'plans', 
-      label: 'Plany', 
-      icon: Folder, 
-      active: activeTab === 'plans',
-      size: 18
+      size: 18,
+      roles: ['Admin', 'SuperAdmin']
     },
     { 
       id: 'security', 
       label: 'Bezpieczeństwo', 
       icon: Shield, 
       active: activeTab === 'security',
-      size: 18
+      size: 18,
+      roles: ['Admin', 'SuperAdmin']
+    },
+    { 
+      id: 'users-and-plans', 
+      label: 'Użytkownicy i Plany', 
+      icon: UserCog, 
+      active: activeTab === 'users-and-plans',
+      size: 18,
+      roles: ['SuperAdmin'] // Tylko dla superadministratora
     },
     { 
       id: 'settings', 
       label: 'Ustawienia', 
       icon: Settings, 
       active: activeTab === 'settings',
-      size: 18
+      size: 18,
+      roles: ['User', 'Admin', 'SuperAdmin']
     },
   ];
+
+  // Filtruj elementy menu na podstawie roli użytkownika
+  const visibleMenuItems = menuItems.filter(item => 
+    item.roles.includes(userRole)
+  );
 
   return (
     <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
@@ -117,7 +124,7 @@ const Sidebar = ({ activeTab, setActiveTab, collapsed, setCollapsed }) => {
       </div>
       
       <nav className="sidebar-nav">
-        {menuItems.map((item) => {
+        {visibleMenuItems.map((item) => {
           const Icon = item.icon;
           return (
             <button

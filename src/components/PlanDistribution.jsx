@@ -4,49 +4,49 @@ import './PlanDistribution.css';
 const PlanDistribution = () => {
   const plans = [
     {
-      name: 'xBesh AI PRO',
+      name: 'Panel AI PRO',
       users: 397,
       percentage: 30.6,
       revenue: '$38,509',
       color: '#06b6d4'
     },
     {
-      name: 'xBesh BUNDLE',
+      name: 'Panel BUNDLE',
       users: 253,
       percentage: 19.5,
       revenue: '$252,241',
       color: '#ef4444'
     },
     {
-      name: 'xBesh AI Starter',
+      name: 'Panel AI Starter',
       users: 231,
       percentage: 17.8,
       revenue: '$6,699',
       color: '#06b6d4'
     },
     {
-      name: 'xBesh AI Vanta Black',
+      name: 'Panel AI Vanta Black',
       users: 221,
       percentage: 17.0,
       revenue: '$109,837',
       color: '#f59e0b'
     },
     {
-      name: 'xBesh AI DFY Command Center',
+      name: 'Panel AI DFY Command Center',
       users: 87,
       percentage: 6.7,
       revenue: '$86,739',
       color: '#10b981'
     },
     {
-      name: 'xBesh 360 Agency',
+      name: 'Panel 360 Agency',
       users: 87,
       percentage: 6.7,
       revenue: '$173,739',
       color: '#10b981'
     },
     {
-      name: 'xBesh Reseller 25 License',
+      name: 'Panel Reseller 25 License',
       users: 11,
       percentage: 0.8,
       revenue: '$3,467',
