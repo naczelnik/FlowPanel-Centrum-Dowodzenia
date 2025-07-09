@@ -6,42 +6,42 @@ const Sidebar = ({ activeTab, setActiveTab, collapsed, setCollapsed }) => {
   const menuItems = [
     { 
       id: 'dashboard', 
-      label: 'Dashboard', 
+      label: 'Panel Główny', 
       icon: BarChart3, 
       active: activeTab === 'dashboard',
       size: 18
     },
     { 
       id: 'users', 
-      label: 'Users', 
+      label: 'Użytkownicy', 
       icon: Users, 
       active: activeTab === 'users',
       size: 18
     },
     { 
       id: 'bulk-import', 
-      label: 'Bulk Import', 
+      label: 'Import Masowy', 
       icon: Upload, 
       active: activeTab === 'bulk-import',
       size: 18
     },
     { 
       id: 'plans', 
-      label: 'Plans', 
+      label: 'Plany', 
       icon: Folder, 
       active: activeTab === 'plans',
       size: 18
     },
     { 
       id: 'security', 
-      label: 'Security', 
+      label: 'Bezpieczeństwo', 
       icon: Shield, 
       active: activeTab === 'security',
       size: 18
     },
     { 
       id: 'settings', 
-      label: 'Settings', 
+      label: 'Ustawienia', 
       icon: Settings, 
       active: activeTab === 'settings',
       size: 18
@@ -58,7 +58,7 @@ const Sidebar = ({ activeTab, setActiveTab, collapsed, setCollapsed }) => {
         <button 
           className="collapse-btn"
           onClick={() => setCollapsed(!collapsed)}
-          title={collapsed ? 'Expand menu' : 'Collapse menu'}
+          title={collapsed ? 'Rozwiń menu' : 'Zwiń menu'}
         >
           {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
         </button>
@@ -86,7 +86,7 @@ const Sidebar = ({ activeTab, setActiveTab, collapsed, setCollapsed }) => {
           <div className="admin-panel-info">
             <div className="admin-icon">⚡</div>
             <div className="admin-text">
-              <div className="admin-title">Admin Panel</div>
+              <div className="admin-title">Panel Admina</div>
               <div className="admin-version">v2.0.1</div>
             </div>
           </div>
