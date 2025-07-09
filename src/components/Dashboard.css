@@ -1,0 +1,33 @@
+.dashboard {
+  padding: 32px 40px;
+  flex: 1;
+  background: #0f0f23;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1600px) {
+  .dashboard {
+    padding: 32px 32px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .dashboard {
+    padding: 24px 24px;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
