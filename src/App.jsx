@@ -3,6 +3,7 @@ import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import Users from './components/Users';
+import Settings from './components/Settings';
 import './App.css';
 
 function App() {
@@ -15,14 +16,16 @@ function App() {
         return <Dashboard />;
       case 'users':
         return <Users />;
+      case 'advertising':
+        return <div className="tab-content">Analityka Reklam - Coming Soon</div>;
       case 'bulk-import':
-        return <div className="tab-content">Bulk Import - Coming Soon</div>;
+        return <div className="tab-content">Import Masowy - Coming Soon</div>;
       case 'plans':
-        return <div className="tab-content">Plans - Coming Soon</div>;
+        return <div className="tab-content">Plany - Coming Soon</div>;
       case 'security':
-        return <div className="tab-content">Security - Coming Soon</div>;
+        return <div className="tab-content">Bezpieczeństwo - Coming Soon</div>;
       case 'settings':
-        return <div className="tab-content">Settings - Coming Soon</div>;
+        return <Settings />;
       default:
         return <Dashboard />;
     }

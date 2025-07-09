@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart3, Users, Upload, Folder, Shield, Settings, ChevronLeft, ChevronRight } from 'lucide-react';
+import { BarChart3, Users, Upload, Folder, Shield, Settings, TrendingUp, ChevronLeft, ChevronRight } from 'lucide-react';
 import './Sidebar.css';
 
 const Sidebar = ({ activeTab, setActiveTab, collapsed, setCollapsed }) => {
@@ -16,6 +16,13 @@ const Sidebar = ({ activeTab, setActiveTab, collapsed, setCollapsed }) => {
       label: 'Użytkownicy', 
       icon: Users, 
       active: activeTab === 'users',
+      size: 18
+    },
+    { 
+      id: 'advertising', 
+      label: 'Analityka Reklam', 
+      icon: TrendingUp, 
+      active: activeTab === 'advertising',
       size: 18
     },
     { 
