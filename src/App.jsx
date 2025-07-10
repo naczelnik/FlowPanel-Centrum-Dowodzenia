@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AuthProvider } from './contexts/AuthContext';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
@@ -30,21 +31,23 @@ function App() {
   };
 
   return (
-    <div className="app">
-      <Sidebar 
-        activeTab={activeTab} 
-        setActiveTab={setActiveTab}
-        collapsed={sidebarCollapsed}
-        setCollapsed={setSidebarCollapsed}
-      />
-      <div className={`main-content ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
-        <Header 
-          sidebarCollapsed={sidebarCollapsed}
-          setSidebarCollapsed={setSidebarCollapsed}
+    <AuthProvider>
+      <div className="app">
+        <Sidebar 
+          activeTab={activeTab} 
+          setActiveTab={setActiveTab}
+          collapsed={sidebarCollapsed}
+          setCollapsed={setSidebarCollapsed}
         />
-        {renderContent()}
+        <div className={`main-content ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
+          <Header 
+            sidebarCollapsed={sidebarCollapsed}
+            setSidebarCollapsed={setSidebarCollapsed}
+          />
+          {renderContent()}
+        </div>
       </div>
-    </div>
+    </AuthProvider>
   );
 }
 

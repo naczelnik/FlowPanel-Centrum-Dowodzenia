@@ -1,0 +1,61 @@
+.auth-modal {
+  max-width: 400px;
+  width: 90%;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  color: #6b7280;
+  z-index: 1;
+}
+
+.input-wrapper input {
+  padding-left: 40px;
+}
+
+.error-banner {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: 16px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: #3b82f6;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-left: 4px;
+  font-size: 14px;
+}
+
+.link-button:hover {
+  color: #2563eb;
+}
+
+.link-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

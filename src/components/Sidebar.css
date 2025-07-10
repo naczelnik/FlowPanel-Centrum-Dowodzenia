@@ -17,8 +17,8 @@
 }
 
 .sidebar-logo {
-  height: 80px;
-  padding: 16px 20px;
+  height: 64px;
+  padding: 8px 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
@@ -26,7 +26,7 @@
 }
 
 .sidebar.collapsed .sidebar-logo {
-  padding: 16px 12px;
+  padding: 8px 12px;
 }
 
 .logo-container {
@@ -86,18 +86,20 @@
 }
 
 .sidebar-header {
-  height: 56px;
-  padding: 12px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  position: relative;
+  height: 0px;
+  padding: 0;
+  border-bottom: none;
+  display: none;
 }
 
 .sidebar.collapsed .sidebar-header {
+  height: 56px;
   padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .collapse-btn {
@@ -112,9 +114,13 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
+  position: absolute;
+  top: 16px;
+  right: 20px;
 }
 
 .sidebar.collapsed .collapse-btn {
+  position: static;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
 }

@@ -111,15 +111,24 @@ const Sidebar = ({ activeTab, setActiveTab, collapsed, setCollapsed }) => {
             <h1 className="logo-title">Flow Panel</h1>
           )}
         </div>
+        {!collapsed && (
+          <button 
+            className="collapse-btn"
+            onClick={() => setCollapsed(!collapsed)}
+            title="Zwiń menu"
+          >
+            <ChevronLeft size={16} />
+          </button>
+        )}
       </div>
 
       <div className="sidebar-header">
         <button 
           className="collapse-btn"
           onClick={() => setCollapsed(!collapsed)}
-          title={collapsed ? 'Rozwiń menu' : 'Zwiń menu'}
+          title="Rozwiń menu"
         >
-          {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+          <ChevronRight size={16} />
         </button>
       </div>
       
