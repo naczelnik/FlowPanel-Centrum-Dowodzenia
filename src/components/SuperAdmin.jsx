@@ -6,10 +6,12 @@ import './SuperAdmin.css';
 const SuperAdmin = () => {
   const [activeTab, setActiveTab] = useState('users');
   const [showAddPlanModal, setShowAddPlanModal] = useState(false);
+  const [showEditPlanModal, setShowEditPlanModal] = useState(false);
   const [showAddRoleModal, setShowAddRoleModal] = useState(false);
   const [showAddUserModal, setShowAddUserModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUsers, setSelectedUsers] = useState([]);
+  const [editingPlan, setEditingPlan] = useState(null);
 
   const [plans, setPlans] = useState([
     {
@@ -202,6 +204,16 @@ const SuperAdmin = () => {
     color: '#6366f1'
   });
 
+  const [editPlan, setEditPlan] = useState({
+    name: '',
+    price: '',
+    currency: 'USD',
+    billing: 'monthly',
+    tokens: '',
+    features: [''],
+    color: '#6366f1'
+  });
+
   const [newRole, setNewRole] = useState({
     name: '',
     displayName: '',
@@ -242,6 +254,51 @@ const SuperAdmin = () => {
         color: '#6366f1'
       });
       setShowAddPlanModal(false);
+    }
+  };
+
+  const handleEditPlan = (plan) => {
+    setEditingPlan(plan);
+    setEditPlan({
+      name: plan.name,
+      price: plan.price.toString(),
+      currency: plan.currency,
+      billing: plan.billing,
+      tokens: plan.tokens.toString(),
+      features: [...plan.features],
+      color: plan.color
+    });
+    setShowEditPlanModal(true);
+  };
+
+  const handleUpdatePlan = () => {
+    if (editPlan.name && editPlan.price && editPlan.tokens && editingPlan) {
+      const updatedPlan = {
+        ...editingPlan,
+        name: editPlan.name,
+        price: parseFloat(editPlan.price),
+        currency: editPlan.currency,
+        billing: editPlan.billing,
+        tokens: parseInt(editPlan.tokens),
+        features: editPlan.features.filter(f => f.trim() !== ''),
+        color: editPlan.color
+      };
+      
+      setPlans(plans.map(plan => 
+        plan.id === editingPlan.id ? updatedPlan : plan
+      ));
+      
+      setEditPlan({
+        name: '',
+        price: '',
+        currency: 'USD',
+        billing: 'monthly',
+        tokens: '',
+        features: [''],
+        color: '#6366f1'
+      });
+      setEditingPlan(null);
+      setShowEditPlanModal(false);
     }
   };
 
@@ -301,27 +358,50 @@ const SuperAdmin = () => {
     setSelectedUsers(selectedUsers.length === users.length ? [] : users.map(u => u.id));
   };
 
-  const addFeature = () => {
-    setNewPlan({
-      ...newPlan,
-      features: [...newPlan.features, '']
-    });
+  const addFeature = (isEdit = false) => {
+    if (isEdit) {
+      setEditPlan({
+        ...editPlan,
+        features: [...editPlan.features, '']
+      });
+    } else {
+      setNewPlan({
+        ...newPlan,
+        features: [...newPlan.features, '']
+      });
+    }
   };
 
-  const updateFeature = (index, value) => {
-    const updatedFeatures = [...newPlan.features];
-    updatedFeatures[index] = value;
-    setNewPlan({
-      ...newPlan,
-      features: updatedFeatures
-    });
+  const updateFeature = (index, value, isEdit = false) => {
+    if (isEdit) {
+      const updatedFeatures = [...editPlan.features];
+      updatedFeatures[index] = value;
+      setEditPlan({
+        ...editPlan,
+        features: updatedFeatures
+      });
+    } else {
+      const updatedFeatures = [...newPlan.features];
+      updatedFeatures[index] = value;
+      setNewPlan({
+        ...newPlan,
+        features: updatedFeatures
+      });
+    }
   };
 
-  const removeFeature = (index) => {
-    setNewPlan({
-      ...newPlan,
-      features: newPlan.features.filter((_, i) => i !== index)
-    });
+  const removeFeature = (index, isEdit = false) => {
+    if (isEdit) {
+      setEditPlan({
+        ...editPlan,
+        features: editPlan.features.filter((_, i) => i !== index)
+      });
+    } else {
+      setNewPlan({
+        ...newPlan,
+        features: newPlan.features.filter((_, i) => i !== index)
+      });
+    }
   };
 
   const togglePermission = (permissionId) => {
@@ -521,12 +601,17 @@ const SuperAdmin = () => {
                 </div>
               </div>
               <div className="plan-actions">
-                <button className="action-btn edit-btn">
+                <button 
+                  className="action-btn edit-btn"
+                  onClick={() => handleEditPlan(plan)}
+                  title="Edytuj plan"
+                >
                   <Edit size={14} />
                 </button>
                 <button 
                   className="action-btn delete-btn"
                   onClick={() => handleDeletePlan(plan.id)}
+                  title="Usuń plan"
                 >
                   <Trash2 size={14} />
                 </button>
@@ -762,7 +847,7 @@ const SuperAdmin = () => {
                 ))}
                 <button
                   type="button"
-                  onClick={addFeature}
+                  onClick={() => addFeature()}
                   className="add-feature-btn"
                 >
                   <Plus size={16} />
@@ -784,6 +869,141 @@ const SuperAdmin = () => {
               >
                 <Save size={16} />
                 Zapisz Plan
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Plan Modal */}
+      {showEditPlanModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h3>Edytuj Plan</h3>
+              <button 
+                className="modal-close"
+                onClick={() => setShowEditPlanModal(false)}
+              >
+                <X size={20} />
+              </button>
+            </div>
+            
+            <div className="modal-body">
+              <div className="form-grid">
+                <div className="form-group">
+                  <label>Nazwa planu *</label>
+                  <input
+                    type="text"
+                    value={editPlan.name}
+                    onChange={(e) => setEditPlan({...editPlan, name: e.target.value})}
+                    placeholder="np. Panel AI Premium"
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label>Cena *</label>
+                  <div className="price-input">
+                    <input
+                      type="number"
+                      value={editPlan.price}
+                      onChange={(e) => setEditPlan({...editPlan, price: e.target.value})}
+                      placeholder="97"
+                    />
+                    <select
+                      value={editPlan.currency}
+                      onChange={(e) => setEditPlan({...editPlan, currency: e.target.value})}
+                    >
+                      <option value="USD">USD</option>
+                      <option value="EUR">EUR</option>
+                      <option value="PLN">PLN</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div className="form-group">
+                  <label>Okres rozliczeniowy</label>
+                  <select
+                    value={editPlan.billing}
+                    onChange={(e) => setEditPlan({...editPlan, billing: e.target.value})}
+                  >
+                    <option value="monthly">Miesięczny</option>
+                    <option value="yearly">Roczny</option>
+                  </select>
+                </div>
+                
+                <div className="form-group">
+                  <label>Liczba tokenów *</label>
+                  <input
+                    type="number"
+                    value={editPlan.tokens}
+                    onChange={(e) => setEditPlan({...editPlan, tokens: e.target.value})}
+                    placeholder="5000000"
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label>Kolor planu</label>
+                  <div className="color-picker">
+                    {['#6366f1', '#8b5cf6', '#06b6d4', '#10b981', '#f59e0b', '#ef4444'].map((color) => (
+                      <button
+                        key={color}
+                        className={`color-option ${editPlan.color === color ? 'active' : ''}`}
+                        style={{ backgroundColor: color }}
+                        onClick={() => setEditPlan({...editPlan, color})}
+                      >
+                        {editPlan.color === color && <Check size={12} />}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="form-group">
+                <label>Funkcje planu</label>
+                {editPlan.features.map((feature, index) => (
+                  <div key={index} className="feature-input">
+                    <input
+                      type="text"
+                      value={feature}
+                      onChange={(e) => updateFeature(index, e.target.value, true)}
+                      placeholder="Opisz funkcję planu"
+                    />
+                    {editPlan.features.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => removeFeature(index, true)}
+                        className="remove-feature-btn"
+                      >
+                        <X size={16} />
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => addFeature(true)}
+                  className="add-feature-btn"
+                >
+                  <Plus size={16} />
+                  Dodaj funkcję
+                </button>
+              </div>
+            </div>
+            
+            <div className="modal-footer">
+              <button 
+                className="btn-secondary"
+                onClick={() => setShowEditPlanModal(false)}
+              >
+                Anuluj
+              </button>
+              <button 
+                className="btn-primary"
+                onClick={handleUpdatePlan}
+              >
+                <Save size={16} />
+                Zaktualizuj Plan
               </button>
             </div>
           </div>
